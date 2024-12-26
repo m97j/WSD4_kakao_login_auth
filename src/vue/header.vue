@@ -3,15 +3,15 @@
     <header class="app-header" :class="{ 'scrolled': isScrolled }">
       <div class="header-left">
         <div class="logo">
-          <a href="/#/">
+          <router-link to="/#/">
             <font-awesome-icon :icon="['fas', 'ticket']" style="height: 100%; color: #E50914;" />
-          </a>
+          </router-link>
         </div>
         <nav class="nav-links desktop-nav">
           <ul>
-            <li><a href="/#/">홈</a></li>
-            <li><a href="/#/search">찾아보기</a></li>
-            <li><a href="/#/wishlist">내가 찜한 리스트</a></li>
+            <li><router-link to="/#/">홈</router-link></li>
+            <li><router-link to="/#/search">찾아보기</router-link></li>
+            <li><router-link to="/#/wishlist">내가 찜한 리스트</router-link></li>
           </ul>
         </nav>
       </div>
@@ -36,10 +36,10 @@
       </button>
       <nav>
         <ul>
-          <li><a href="/#/" @click="toggleMobileMenu">홈</a></li>
-          <li><a href="/#/popular" @click="toggleMobileMenu">대세 콘텐츠</a></li>
-          <li><a href="/#/search" @click="toggleMobileMenu">찾아보기</a></li>
-          <li><a href="/#/wishlist" @click="toggleMobileMenu">내가 찜한 리스트</a></li>
+          <li><router-link to="/#/" @click="toggleMobileMenu">홈</router-link></li>
+          <li><router-link to="/#/popular" @click="toggleMobileMenu">대세 콘텐츠</router-link></li>
+          <li><router-link to="/#/search" @click="toggleMobileMenu">찾아보기</router-link></li>
+          <li><router-link to="/#/wishlist" @click="toggleMobileMenu">내가 찜한 리스트</router-link></li>
         </ul>
       </nav>
     </div>
