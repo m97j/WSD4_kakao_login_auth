@@ -10,15 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: '16'
 
       - name: Install dependencies
         run: npm install
+
+      - name: Set up environment variables
+        run: |
+          echo "VITE_TMDB_API_KEY=${{ secrets.VITE_TMDB_API_KEY }}" > .env
+          echo "VITE_KAKAO_JS_KEY=${{ secrets.VITE_KAKAO_JS_KEY }}" >> .env
 
       - name: Build the project
         run: npm run build
