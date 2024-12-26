@@ -22,7 +22,7 @@
 import { ref, computed, onMounted, onUnmounted, defineComponent, watch } from 'vue';
 import axios from 'axios';
 import { useWishlist } from "../../script/movie/wishlist.ts";  // useWishlist import
-import { Movie } from '../../types/Movie.ts'; // Movie 타입 import
+import { Movie } from '../../types/Movie'; // Movie 타입 import (절대경로 사용)
 
 export default defineComponent({
   name: 'MovieGrid',
@@ -47,6 +47,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    // 여기에 Movie 타입을 지정하여 사용
     const movies = ref<Movie[]>([]); // Movie 타입 사용
     const currentPage = ref(1);
     const gridContainer = ref<HTMLElement | null>(null);
