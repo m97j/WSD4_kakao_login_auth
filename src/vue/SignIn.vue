@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { tryLoginWithKakao } from '@/script/auth/Authentication.js';
 
@@ -35,7 +35,9 @@ export default {
     const checkAuthAndRedirect = () => {
       isAuthenticated.value = localStorage.getItem('authToken') !== null;
       if (isAuthenticated.value) {
-        setTimeout(() => router.push('/'), 2000); // 2초 후 홈으로 리다이렉트
+        nextTick(() => {
+          router.push('/'); // 로그인 후 홈으로 리다이렉션
+        });
       }
     };
 
@@ -44,7 +46,7 @@ export default {
       tryLoginWithKakao(
         (user) => {
           console.log('로그인 성공:', user);
-          router.push('/'); // 로그인 성공 시 홈으로 리다이렉트
+          nextTick(() => router.push('/')); // 로그인 후 홈으로 리다이렉션
         },
         (error) => {
           errorMessage.value = '로그인에 실패했습니다. 다시 시도해주세요.';
@@ -64,6 +66,7 @@ export default {
     };
   },
 };
+
 </script>
 
 <style scoped>

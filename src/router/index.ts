@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router'; // 변경: createWebHistory -> createWebHashHistory
 import SignIn from '@/vue/SignIn.vue';
 import Home from '@/vue/home.vue';
 
@@ -39,7 +39,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(import.meta.env.BASE_URL || '/'),
+    history: createWebHashHistory(), // 변경: createWebHistory -> createWebHashHistory
     routes,
 });
 
