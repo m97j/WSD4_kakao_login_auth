@@ -10,8 +10,8 @@
         <nav class="nav-links desktop-nav">
           <ul>
             <li><router-link to="/#/">홈</router-link></li>
-            <li><router-link to="/#/search">찾아보기</router-link></li>
-            <li><router-link to="/#/wishlist">내가 찜한 리스트</router-link></li>
+            <li><router-link to="/search">찾아보기</router-link></li>
+            <li><router-link to="/wishlist">내가 찜한 리스트</router-link></li>
           </ul>
         </nav>
       </div>
