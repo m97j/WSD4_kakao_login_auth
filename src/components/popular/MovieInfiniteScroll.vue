@@ -4,8 +4,7 @@
       <div v-for="(movieGroup, index) in visibleMovieGroups" :key="index"
            :class="['movie-row', { 'full': movieGroup.length === rowSize }]">
         <div v-for="movie in movieGroup" :key="movie.id" class="movie-card"
-             @mouseup="toggleWishlist(movie)"
-        >
+             @mouseup="toggleWishlist(movie)">
           <img :src="getImageUrl(movie.poster_path)" :alt="movie.title">
           <div class="movie-title">{{ movie.title }}</div>
           <div v-if="isInWishlist(movie.id)" class="wishlist-indicator">👍</div>
@@ -20,23 +19,15 @@
 </template>
 
 <script lang="ts">
-import {ref, computed, onMounted, onUnmounted, defineComponent, watch} from 'vue';
+import { ref, computed, onMounted, onUnmounted, defineComponent, watch } from 'vue';
 import axios from 'axios';
-import {useWishlist} from "@/script/movie/wishlist.ts";
-
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
-  original_language: string;
-  vote_average: number;
-  // Add other relevant movie properties
-}
+import { useWishlist } from "../../script/movie/wishlist.ts";  // useWishlist import
+import { Movie } from '../../types/Movie.ts'; // Movie 타입 import
 
 export default defineComponent({
   name: 'MovieGrid',
   props: {
-    genreCode : {
+    genreCode: {
       type: String,
       required: true
     },
@@ -53,11 +44,10 @@ export default defineComponent({
       type: Number,
       required: true,
       default: 100
-
     }
   },
   setup(props) {
-    const movies = ref<Movie[]>([]);
+    const movies = ref<Movie[]>([]); // Movie 타입 사용
     const currentPage = ref(1);
     const gridContainer = ref<HTMLElement | null>(null);
     const loadingTrigger = ref<HTMLElement | null>(null);
@@ -81,8 +71,8 @@ export default defineComponent({
       resetMovies();
     });
 
-    // Use the wishlist composable
-    const {  loadWishlist, toggleWishlist, isInWishlist } = useWishlist();
+    // useWishlist 사용
+    const { loadWishlist, toggleWishlist, isInWishlist } = useWishlist();
 
     const fetchMovies = async (): Promise<void> => {
       if (isLoading.value || !hasMore.value) return;
@@ -92,26 +82,26 @@ export default defineComponent({
       try {
         if (props.genreCode === "0") {
           response = await axios.get<{ results: Movie[] }>(
-              `https://api.themoviedb.org/3/movie/popular`, {
-                params: {
-                  api_key: props.apiKey,
-                  language: 'ko-KR',
-                  page: currentPage.value,
-                  per_page: 10
-                }
+            `https://api.themoviedb.org/3/movie/popular`, {
+              params: {
+                api_key: props.apiKey,
+                language: 'ko-KR',
+                page: currentPage.value,
+                per_page: 10
               }
+            }
           );
         } else {
           response = await axios.get<{ results: Movie[] }>(
-              `https://api.themoviedb.org/3/discover/movie`, {
-                params: {
-                  api_key: props.apiKey,
-                  with_genres: props.genreCode,
-                  language: 'ko-KR',
-                  page: currentPage.value,
-                  per_page: 10
-                }
+            `https://api.themoviedb.org/3/discover/movie`, {
+              params: {
+                api_key: props.apiKey,
+                with_genres: props.genreCode,
+                language: 'ko-KR',
+                page: currentPage.value,
+                per_page: 10
               }
+            }
           );
         }
 
@@ -235,12 +225,12 @@ export default defineComponent({
       window.addEventListener('scroll', handleScroll);
 
       const observer = new IntersectionObserver(
-          (entries) => {
-            if (entries[0].isIntersecting && !isLoading.value && hasMore.value) {
-              fetchMovies();
-            }
-          },
-          { rootMargin: '100px', threshold: 0.1 }
+        (entries) => {
+          if (entries[0].isIntersecting && !isLoading.value && hasMore.value) {
+            fetchMovies();
+          }
+        },
+        { rootMargin: '100px', threshold: 0.1 }
       );
 
       if (loadingTrigger.value) {
@@ -275,7 +265,6 @@ export default defineComponent({
   }
 });
 </script>
-
 
 <style scoped>
 html, body {
