@@ -1,13 +1,5 @@
 import { ref, Ref } from 'vue';
-
-interface Movie {
-    id: number;
-    title: string;
-    poster_path: string;
-    release_date?: string;
-    overview?: string;
-    vote_average?: number;
-}
+import { Movie } from '../../types/Movie';  // Movie 타입 import
 
 export function useWishlist() {
     const wishlist: Ref<Movie[]> = ref([]);

@@ -1,28 +1,8 @@
-<template>
-  <div class="movie-grid" ref="gridContainer">
-    <div :class="['grid-container', currentView]">
-      <div v-for="(movieGroup, index) in visibleMovieGroups" :key="index"
-           :class="['movie-row', { 'full': movieGroup.length === rowSize }]">
-        <div v-for="movie in movieGroup" :key="movie.id" class="movie-card"
-             @mouseup="toggleWishlist(movie)">
-          <img :src="getImageUrl(movie.poster_path)" :alt="movie.title">
-          <div class="movie-title">{{ movie.title }}</div>
-          <div v-if="isInWishlist(movie.id)" class="wishlist-indicator">👍</div>
-        </div>
-      </div>
-    </div>
-    <div ref="loadingTrigger" class="loading-trigger">
-      <div v-if="isLoading" class="loading-indicator">Loading...</div>
-    </div>
-    <button v-show="showTopButton" @click="scrollToTopAndReset" class="top-button">Top</button>
-  </div>
-</template>
-
 <script lang="ts">
 import { ref, computed, onMounted, onUnmounted, defineComponent, watch } from 'vue';
 import axios from 'axios';
-import { useWishlist } from "../../script/movie/wishlist.ts";  // useWishlist import
-import { Movie } from '../../types/Movie'; // Movie 타입 import (절대경로 사용)
+import { useWishlist } from "../../script/movie/wishlist.ts";
+import { Movie } from '../../types/Movie';
 
 export default defineComponent({
   name: 'MovieGrid',
@@ -44,11 +24,14 @@ export default defineComponent({
       type: Number,
       required: true,
       default: 100
+    },
+    movies: {
+      type: Array as () => Movie[],
+      required: true
     }
   },
   setup(props) {
-    // 여기에 Movie 타입을 지정하여 사용
-    const movies = ref<Movie[]>([]); // Movie 타입 사용
+    const movies = ref<Movie[]>([]);
     const currentPage = ref(1);
     const gridContainer = ref<HTMLElement | null>(null);
     const loadingTrigger = ref<HTMLElement | null>(null);
@@ -72,7 +55,6 @@ export default defineComponent({
       resetMovies();
     });
 
-    // useWishlist 사용
     const { loadWishlist, toggleWishlist, isInWishlist } = useWishlist();
 
     const fetchMovies = async (): Promise<void> => {
@@ -266,6 +248,7 @@ export default defineComponent({
   }
 });
 </script>
+
 
 <style scoped>
 html, body {
