@@ -65,24 +65,24 @@ export default defineComponent({
       try {
         if (props.genreCode === "0") {
           response = await axios.get<{ results: Movie[] }>(
-            `https://api.themoviedb.org/3/movie/popular`, {
+            `https://api.themoviedb.org/3/movie/popular`,
+            {
               params: {
                 api_key: props.apiKey,
                 language: 'ko-KR',
                 page: currentPage.value,
-                per_page: 10
               }
             }
           );
         } else {
           response = await axios.get<{ results: Movie[] }>(
-            `https://api.themoviedb.org/3/discover/movie`, {
+            `https://api.themoviedb.org/3/discover/movie`,
+            {
               params: {
                 api_key: props.apiKey,
                 with_genres: props.genreCode,
                 language: 'ko-KR',
                 page: currentPage.value,
-                per_page: 10
               }
             }
           );
@@ -107,7 +107,6 @@ export default defineComponent({
           });
 
           movies.value = movieArray;
-
           currentPage.value++;
         } else {
           hasMore.value = false;
@@ -118,6 +117,7 @@ export default defineComponent({
         isLoading.value = false;
       }
     };
+
 
     const getImageUrl = (path: string | null): string => {
       return path ? `https://image.tmdb.org/t/p/w300${path}` : '/placeholder-image.jpg';
